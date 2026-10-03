@@ -1,0 +1,91 @@
+<UserControl x:Class="MvvmTemplate.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MvvmTemplate.Core.ViewModels;assembly=MvvmTemplate.Core"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:HomeViewModel}"
+             d:DesignHeight="640"
+             d:DesignWidth="860">
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <StackPanel MaxWidth="880" Margin="32,28">
+
+      <TextBlock FontSize="26"
+                 FontWeight="SemiBold"
+                 Foreground="{StaticResource TextBrush}"
+                 Text="{Binding Greeting, StringFormat={}{0}!}" />
+      <TextBlock Margin="0,6,0,24"
+                 Style="{StaticResource BodyText}"
+                 Text="This is the starting point of a WPF application built with MVVM. The pages are sample content: keep the structure, replace the features." />
+
+      <!-- Summary cards -->
+      <UniformGrid Margin="-6,0,-6,0" Columns="3">
+        <Border Margin="6" Style="{StaticResource Card}">
+          <StackPanel>
+            <TextBlock Style="{StaticResource FieldLabel}" Text="ALL TASKS" />
+            <TextBlock FontSize="30" FontWeight="SemiBold" Foreground="{StaticResource TextBrush}" Text="{Binding TotalCount}" />
+          </StackPanel>
+        </Border>
+        <Border Margin="6" Style="{StaticResource Card}">
+          <StackPanel>
+            <TextBlock Style="{StaticResource FieldLabel}" Text="ACTIVE" />
+            <TextBlock FontSize="30" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" Text="{Binding ActiveCount}" />
+          </StackPanel>
+        </Border>
+        <Border Margin="6" Style="{StaticResource Card}">
+          <StackPanel>
+            <TextBlock Style="{StaticResource FieldLabel}" Text="COMPLETED" />
+            <TextBlock FontSize="30" FontWeight="SemiBold" Foreground="{StaticResource SuccessBrush}" Text="{Binding CompletedCount}" />
+          </StackPanel>
+        </Border>
+      </UniformGrid>
+
+      <!-- Progress and shortcuts -->
+      <Border Margin="0,6,0,0" Style="{StaticResource Card}">
+        <StackPanel>
+          <DockPanel Margin="0,0,0,10">
+            <TextBlock DockPanel.Dock="Right" Style="{StaticResource MutedText}" Text="{Binding CompletionPercent, StringFormat={}{0}% done}" />
+            <TextBlock Style="{StaticResource SectionTitle}" Margin="0" Text="Progress" />
+          </DockPanel>
+          <ProgressBar Maximum="100" Style="{StaticResource ProgressMeter}" Value="{Binding CompletionPercent, Mode=OneWay}" />
+
+          <WrapPanel Margin="0,20,0,0">
+            <Button Margin="0,0,10,0" Command="{Binding OpenTasksCommand}" Style="{StaticResource PrimaryButton}">
+              <StackPanel Orientation="Horizontal">
+                <Path Margin="0,0,8,0" Data="{StaticResource Icon.Tasks}" Style="{StaticResource Icon}" />
+                <TextBlock Text="Open tasks" />
+              </StackPanel>
+            </Button>
+            <Button Margin="0,0,10,0"
+                    Command="{Binding OpenActiveTasksCommand}"
+                    Content="Show active only"
+                    Style="{StaticResource SecondaryButton}"
+                    ToolTip="Navigates with a parameter: the task list opens with the Active filter" />
+            <Button Command="{Binding OpenSettingsCommand}" Content="Settings" Style="{StaticResource SecondaryButton}" />
+          </WrapPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- What the template demonstrates -->
+      <Border Margin="0,12,0,0" Style="{StaticResource Card}">
+        <StackPanel>
+          <TextBlock Style="{StaticResource SectionTitle}" Text="What's inside" />
+          <TextBlock Style="{StaticResource BodyText}">
+            <Run FontWeight="SemiBold" Text="Navigation" /><Run Text=" — INavigationService creates page view models; DataTemplates pick their views." />
+            <LineBreak />
+            <Run FontWeight="SemiBold" Text="Dependency injection" /><Run Text=" — Microsoft.Extensions.Hosting builds every service, view model and window." />
+            <LineBreak />
+            <Run FontWeight="SemiBold" Text="Validation" /><Run Text=" — ObservableValidator and data annotations, shown on the Tasks page." />
+            <LineBreak />
+            <Run FontWeight="SemiBold" Text="Dialogs" /><Run Text=" — view models ask IDialogService, never MessageBox." />
+            <LineBreak />
+            <Run FontWeight="SemiBold" Text="Tests" /><Run Text=" — the core has no WPF dependency, so all of it is covered by xUnit tests." />
+          </TextBlock>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

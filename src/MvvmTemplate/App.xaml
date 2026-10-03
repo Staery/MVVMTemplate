@@ -1,0 +1,15 @@
+<Application x:Class="MvvmTemplate.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ShutdownMode="OnMainWindowClose">
+  <!-- No StartupUri: the main window is created by the DI container in App.OnStartup. -->
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Themes/Controls.xaml" />
+        <!-- Maps every page view model to its view (view-model-first navigation). -->
+        <ResourceDictionary Source="Views/ViewTemplates.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

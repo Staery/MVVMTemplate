@@ -1,0 +1,148 @@
+<UserControl x:Class="MvvmTemplate.Views.TodoListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MvvmTemplate.Core.ViewModels;assembly=MvvmTemplate.Core"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=vm:TodoListViewModel}"
+             d:DesignHeight="640"
+             d:DesignWidth="860">
+
+  <Grid MaxWidth="880" Margin="32,28">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- New task form. The error text comes from ObservableValidator through INotifyDataErrorInfo. -->
+    <Border Style="{StaticResource Card}">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="NewTitleBox"
+                 Style="{StaticResource InputBox}"
+                 Tag="What needs to be done?"
+                 Text="{Binding NewTitle, UpdateSourceTrigger=PropertyChanged}">
+          <TextBox.InputBindings>
+            <KeyBinding Key="Enter" Command="{Binding AddCommand}" />
+          </TextBox.InputBindings>
+        </TextBox>
+
+        <Button Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding AddCommand}"
+                Style="{StaticResource PrimaryButton}"
+                ToolTip="Add the task (Enter)">
+          <StackPanel Orientation="Horizontal">
+            <Path Margin="0,0,6,0" Data="{StaticResource Icon.Add}" Style="{StaticResource Icon}" />
+            <TextBlock Text="Add" />
+          </StackPanel>
+        </Button>
+
+        <TextBlock Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   Margin="2,6,0,0"
+                   Style="{StaticResource ErrorText}"
+                   Text="{Binding (Validation.Errors)/ErrorContent, ElementName=NewTitleBox}" />
+      </Grid>
+    </Border>
+
+    <!-- Search and filter -->
+    <Grid Grid.Row="1" Margin="0,16,0,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="160" />
+      </Grid.ColumnDefinitions>
+      <TextBox Style="{StaticResource InputBox}" Tag="Search tasks" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+      <ComboBox Grid.Column="1"
+                Margin="10,0,0,0"
+                ItemsSource="{Binding Filters}"
+                SelectedItem="{Binding Filter}"
+                Style="{StaticResource FieldCombo}"
+                ToolTip="Show all, active or completed tasks" />
+    </Grid>
+
+    <!-- Counters -->
+    <DockPanel Grid.Row="2" Margin="2,14,2,10">
+      <Button Command="{Binding ClearCompletedCommand}"
+              Content="Clear completed"
+              DockPanel.Dock="Right"
+              Style="{StaticResource LinkButton}" />
+      <TextBlock Style="{StaticResource MutedText}">
+        <Run Text="{Binding ActiveCount, Mode=OneWay}" /><Run Text=" active · " /><Run Text="{Binding CompletedCount, Mode=OneWay}" /><Run Text=" completed" />
+      </TextBlock>
+    </DockPanel>
+
+    <!-- Task list -->
+    <ScrollViewer Grid.Row="3"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
+                  Visibility="{Binding IsEmpty, Converter={StaticResource CollapsedWhen}}">
+      <ItemsControl ItemsSource="{Binding Items}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate DataType="{x:Type vm:TodoItemViewModel}">
+            <Border Margin="0,0,0,8" Padding="14,10" Style="{StaticResource Card}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox VerticalAlignment="Center"
+                          IsChecked="{Binding IsDone}"
+                          Style="{StaticResource CheckBoxBase}"
+                          ToolTip="Mark as done" />
+
+                <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center">
+                  <TextBlock x:Name="TitleText"
+                             FontSize="14"
+                             Foreground="{StaticResource TextBrush}"
+                             Text="{Binding Title}"
+                             TextTrimming="CharacterEllipsis" />
+                  <TextBlock Margin="0,2,0,0"
+                             Style="{StaticResource MutedText}"
+                             Text="{Binding CreatedAt.LocalDateTime, StringFormat='Created {0:g}'}" />
+                </StackPanel>
+
+                <!-- The command lives on the page view model, the item is the parameter. -->
+                <Button Grid.Column="2"
+                        Command="{Binding DataContext.RemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}"
+                        Style="{StaticResource DangerIconButton}"
+                        ToolTip="Delete task">
+                  <Path Data="{StaticResource Icon.Delete}" Style="{StaticResource Icon}" />
+                </Button>
+              </Grid>
+            </Border>
+            <DataTemplate.Triggers>
+              <DataTrigger Binding="{Binding IsDone}" Value="True">
+                <Setter TargetName="TitleText" Property="TextDecorations" Value="Strikethrough" />
+                <Setter TargetName="TitleText" Property="Foreground" Value="{StaticResource MutedTextBrush}" />
+              </DataTrigger>
+            </DataTemplate.Triggers>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+
+    <!-- Empty state -->
+    <TextBlock Grid.Row="3"
+               Margin="0,40,0,0"
+               HorizontalAlignment="Center"
+               Style="{StaticResource MutedText}"
+               FontSize="14"
+               Text="{Binding EmptyMessage}"
+               Visibility="{Binding IsEmpty, Converter={StaticResource VisibleWhen}}" />
+  </Grid>
+</UserControl>
