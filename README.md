@@ -24,6 +24,14 @@ a task list, that shows how the parts fit together.
 The rule behind the layout is simple: **all logic lives in a plain `net8.0` library with no WPF dependency**, so
 every view model can be unit-tested. The WPF project only contains views, styles and thin platform services.
 
+## 📸 Screenshots
+
+![Home page with task counters](docs/screenshots/home.png)
+
+*The sample Tasks page: validation messages come from data annotations on the view model:*
+
+![Validation on the Tasks page](docs/screenshots/tasks-validation.png)
+
 ## ✨ What the template provides
 
 | | |
