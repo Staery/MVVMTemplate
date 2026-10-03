@@ -28,6 +28,7 @@
         "**/[Oo]bj/**",
         ".template.config/**/*",
         ".git/**",
+        "docs/**",
         ".vs/**",
         "**/*.user",
         "**/*.filelist",
