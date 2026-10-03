@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
     /// Adds services, navigation and view models. The caller must also register an
     /// <see cref="Abstractions.IDialogService"/> implementation.
     /// </summary>
-    public static IServiceCollection AddMvvmTemplateCore(this IServiceCollection services)
+    public static IServiceCollection AddCoreServices(this IServiceCollection services)
     {
         // Services
         services.AddSingleton(TimeProvider.System);

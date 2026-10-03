@@ -9,7 +9,7 @@ internal static class TestServices
 {
     public static ServiceProvider Create(FakeDialogService? dialogs = null) =>
         new ServiceCollection()
-            .AddMvvmTemplateCore()
+            .AddCoreServices()
             .AddSingleton<IDialogService>(dialogs ?? new FakeDialogService())
             .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
 }

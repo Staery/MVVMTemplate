@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Anton Selkin",
+  "classifications": ["Desktop", "Windows", "WPF", "MVVM"],
+  "identity": "Staery.Wpf.MvvmTemplate.CSharp",
+  "groupIdentity": "Staery.Wpf.MvvmTemplate",
+  "name": "WPF MVVM application (generic host, navigation, tests)",
+  "description": "A WPF application with MVVM (CommunityToolkit.Mvvm), dependency injection via Microsoft.Extensions.Hosting, view-model-first navigation, dialogs, validation, a light theme and an xUnit test project.",
+  "shortName": "wpf-mvvm",
+  "sourceName": "MvvmTemplate",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "guids": [
+    "0C24F4BB-D7F7-4526-B679-77BC609CA210",
+    "41E2F531-2BD1-45D6-8B0F-406E7B1B27EE",
+    "4B8AAF60-CF92-4DA7-BFB4-95BD083EEC1F",
+    "6E1B7C3A-52D4-4F0B-9C8E-3A7D2F1B5E90",
+    "A4694B7A-1B52-434A-A400-73D982DFBEAB",
+    "C5F3055C-2B43-4348-9F19-8F144D97245D"
+  ],
+  "sources": [
+    {
+      "exclude": [
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        ".template.config/**/*",
+        ".git/**",
+        ".vs/**",
+        "**/*.user",
+        "**/*.filelist",
+        "**/*.lock.json",
+        "README.md",
+        "README.ru.md",
+        "LICENSE"
+      ]
+    }
+  ],
+  "primaryOutputs": [
+    { "path": "MvvmTemplate.sln" }
+  ],
+  "postActions": []
+}

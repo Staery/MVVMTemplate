@@ -28,7 +28,7 @@ public partial class App : Application
     private static void ConfigureServices(IServiceCollection services)
     {
         // Services, navigation and view models from MvvmTemplate.Core.
-        services.AddMvvmTemplateCore();
+        services.AddCoreServices();
 
         // WPF implementations of the core abstractions.
         services.AddSingleton<IDialogService, DialogService>();
