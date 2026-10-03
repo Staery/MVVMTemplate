@@ -148,6 +148,20 @@ dotnet run --project src/MyApp
 генерирует новые GUID проектов и не копирует этот README и лицензию. Команда `dotnet new uninstall` покажет, как
 удалить шаблон.
 
+### Вариант 3: установить шаблон из релиза
+
+Скачайте `Staery.Wpf.MvvmTemplate.1.0.0.nupkg` со страницы [Releases](https://github.com/Staery/MVVMTemplate/releases)
+и установите шаблон без клонирования репозитория:
+
+```bash
+dotnet new install ./Staery.Wpf.MvvmTemplate.1.0.0.nupkg
+dotnet new wpf-mvvm -n MyApp
+```
+
+Чтобы просто посмотреть на работающий пример, скачайте там же `MVVMTemplate-*-win-x64-framework-dependent.zip`,
+распакуйте и запустите `MvvmTemplate.exe` (нужен
+[.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)).
+
 ## ➕ Как добавить новую страницу
 
 Пример — страница «Reports».

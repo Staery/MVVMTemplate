@@ -146,6 +146,20 @@ The template replaces `MvvmTemplate` everywhere (folders, project files, namespa
 generates new project GUIDs and leaves out this README and the license. Run `dotnet new uninstall` to see the exact
 command that removes the template again.
 
+### Option 3: install the template from a release
+
+Download `Staery.Wpf.MvvmTemplate.1.0.0.nupkg` from [Releases](https://github.com/Staery/MVVMTemplate/releases)
+and install it without cloning the repository:
+
+```bash
+dotnet new install ./Staery.Wpf.MvvmTemplate.1.0.0.nupkg
+dotnet new wpf-mvvm -n MyApp
+```
+
+To just look at the running sample, download `MVVMTemplate-*-win-x64-framework-dependent.zip` from the same page,
+unzip it and run `MvvmTemplate.exe` (requires the
+[.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)).
+
 ## ➕ Adding a new page
 
 Example: a "Reports" page.
